@@ -17,7 +17,7 @@ LIBFT_LIB = libft.a
 CC = gcc
 CFLAG = -Wall -Wextra -Werror
 
-SRCS = ./ft_printf.c ./print_hex.c ./print_int.c ./print_string.c
+SRCS = ./ft_printf.c ./numlen.c ./print_hex.c ./print_int.c ./print_str.c
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c
