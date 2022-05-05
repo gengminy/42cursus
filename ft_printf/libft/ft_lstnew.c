@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   numlen.c                                           :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knoh <knoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 14:35:57 by knoh              #+#    #+#             */
-/*   Updated: 2022/05/05 14:36:21 by knoh             ###   ########.fr       */
+/*   Created: 2022/03/12 13:29:32 by knoh              #+#    #+#             */
+/*   Updated: 2022/03/12 13:29:32 by knoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	get_numlen_base_signed(long n, int base)
+#include "libft.h"
+#include <stdlib.h>
+
+t_list	*ft_lstnew(void *content)
 {
-	int	len;
+	t_list	*node;
 
-	len = 1;
-	if (n < 0)
-		len++;
-	while (n / base != 0)
-	{
-		len++;
-		n /= base;
-	}
-	return (len);
-}
-
-int	get_numlen_base_unsigned(unsigned long n, int base)
-{
-	int	len;
-
-	len = 1;
-	while (n / base != 0)
-	{
-		len++;
-		n /= base;
-	}
-	return (len);
+	node = (t_list *)malloc(sizeof(t_list));
+	if (!node)
+		return (0);
+	node->content = content;
+	node->next = 0;
+	return (node);
 }

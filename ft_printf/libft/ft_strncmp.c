@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   numlen.c                                           :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knoh <knoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 14:35:57 by knoh              #+#    #+#             */
-/*   Updated: 2022/05/05 14:36:21 by knoh             ###   ########.fr       */
+/*   Created: 2022/03/08 13:43:32 by knoh              #+#    #+#             */
+/*   Updated: 2022/03/08 13:43:33 by knoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	get_numlen_base_signed(long n, int base)
+#include <unistd.h>
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int	len;
+	size_t			i;
+	unsigned char	c1;
+	unsigned char	c2;
 
-	len = 1;
-	if (n < 0)
-		len++;
-	while (n / base != 0)
+	i = 0;
+	while (i < n && (s1[i] || s2[i]))
 	{
-		len++;
-		n /= base;
+		c1 = s1[i];
+		c2 = s2[i];
+		if (c1 != c2)
+			return (c1 - c2);
+		i++;
 	}
-	return (len);
-}
-
-int	get_numlen_base_unsigned(unsigned long n, int base)
-{
-	int	len;
-
-	len = 1;
-	while (n / base != 0)
-	{
-		len++;
-		n /= base;
-	}
-	return (len);
+	return (0);
 }

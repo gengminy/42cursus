@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   numlen.c                                           :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knoh <knoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 14:35:57 by knoh              #+#    #+#             */
-/*   Updated: 2022/05/05 14:36:21 by knoh             ###   ########.fr       */
+/*   Created: 2022/03/08 13:43:31 by knoh              #+#    #+#             */
+/*   Updated: 2022/03/08 13:43:31 by knoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	get_numlen_base_signed(long n, int base)
+#include "libft.h"
+#include <stdlib.h>
+
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int	len;
+	size_t	i;
+	size_t	len;
+	char	*result;
 
-	len = 1;
-	if (n < 0)
-		len++;
-	while (n / base != 0)
+	if (!s)
+		return (0);
+	i = 0;
+	len = ft_strlen(s);
+	result = (char *)malloc(len + 1);
+	if (!result)
+		return (0);
+	while (i < len)
 	{
-		len++;
-		n /= base;
+		result[i] = f(i, s[i]);
+		i++;
 	}
-	return (len);
-}
-
-int	get_numlen_base_unsigned(unsigned long n, int base)
-{
-	int	len;
-
-	len = 1;
-	while (n / base != 0)
-	{
-		len++;
-		n /= base;
-	}
-	return (len);
+	result[i] = 0;
+	return (result);
 }

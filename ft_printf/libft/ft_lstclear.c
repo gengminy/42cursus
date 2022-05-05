@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   numlen.c                                           :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knoh <knoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 14:35:57 by knoh              #+#    #+#             */
-/*   Updated: 2022/05/05 14:36:21 by knoh             ###   ########.fr       */
+/*   Created: 2022/03/12 13:28:50 by knoh              #+#    #+#             */
+/*   Updated: 2022/03/12 13:28:52 by knoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	get_numlen_base_signed(long n, int base)
+#include "libft.h"
+#include <stdlib.h>
+
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	int	len;
+	t_list	*cur;
+	t_list	*tmp;
 
-	len = 1;
-	if (n < 0)
-		len++;
-	while (n / base != 0)
+	cur = *lst;
+	while (cur)
 	{
-		len++;
-		n /= base;
+		tmp = cur;
+		cur = cur->next;
+		del(tmp->content);
+		free(tmp);
 	}
-	return (len);
-}
-
-int	get_numlen_base_unsigned(unsigned long n, int base)
-{
-	int	len;
-
-	len = 1;
-	while (n / base != 0)
-	{
-		len++;
-		n /= base;
-	}
-	return (len);
+	*lst = 0;
 }

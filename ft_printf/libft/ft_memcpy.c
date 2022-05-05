@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   numlen.c                                           :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knoh <knoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 14:35:57 by knoh              #+#    #+#             */
-/*   Updated: 2022/05/05 14:36:21 by knoh             ###   ########.fr       */
+/*   Created: 2022/03/08 13:42:39 by knoh              #+#    #+#             */
+/*   Updated: 2022/03/08 13:42:40 by knoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	get_numlen_base_signed(long n, int base)
+#include <unistd.h>
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int	len;
+	size_t	i;
 
-	len = 1;
-	if (n < 0)
-		len++;
-	while (n / base != 0)
+	i = 0;
+	if (n == 0 || dst == src)
+		return (dst);
+	if (dst == 0 && src == 0)
+		return (0);
+	while (i < n)
 	{
-		len++;
-		n /= base;
+		*((unsigned char *)dst + i) = *((unsigned char *)src + i);
+		i++;
 	}
-	return (len);
-}
-
-int	get_numlen_base_unsigned(unsigned long n, int base)
-{
-	int	len;
-
-	len = 1;
-	while (n / base != 0)
-	{
-		len++;
-		n /= base;
-	}
-	return (len);
+	return (dst);
 }

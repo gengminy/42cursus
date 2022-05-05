@@ -40,14 +40,9 @@ clean :
 fclean : clean
 	rm -f $(NAME)
 	make fclean -C $(LIBFT)
-
-
-
-test :
-	gcc -Wall -Wextra -Werror $(SRCS) ./libft/*.c main.c -o test.out
-
-
-
-re : fclean all
+	
+re :
+	make fclean
+	make all
 
 .PHONY:	all clean fclean re bonus

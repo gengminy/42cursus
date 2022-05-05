@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_hex.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knoh <knoh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/05 14:36:03 by knoh              #+#    #+#             */
+/*   Updated: 2022/05/05 14:36:22 by knoh             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static void	put_hex(char format, unsigned long val)
@@ -17,15 +29,15 @@ static void	put_hex(char format, unsigned long val)
 		write(1, &"0123456789ABCDEF"[cur % 16], 1);
 }
 
-int print_ptr(unsigned long hex_addr)
+int	print_ptr(unsigned long hex_addr)
 {
 	write(1, "0x", 2);
 	put_hex('x', hex_addr);
 	return (get_numlen_base_unsigned(hex_addr, 16) + 2);
 }
 
-int print_hex(char format, unsigned long val)
+int	print_hex(char format, unsigned long val)
 {
 	put_hex(format, val);
-	return (get_numlen_base_unsigned(val, 16)); //확인 필요
+	return (get_numlen_base_unsigned(val, 16));
 }

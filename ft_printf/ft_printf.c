@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knoh <knoh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/05 14:35:48 by knoh              #+#    #+#             */
+/*   Updated: 2022/05/05 14:36:16 by knoh             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdarg.h>
 #include "ft_printf.h"
 
-static int print_var(const char format, va_list *ap)
+static int	print_var(const char format, va_list *ap)
 {
 	if (format == 'c')
 		return (print_char(va_arg(*ap, int)));
@@ -20,11 +32,11 @@ static int print_var(const char format, va_list *ap)
 	return (0);
 }
 
-int ft_printf(const char *str, ...)
+int	ft_printf(const char *str, ...)
 {
 	int		ret;
 	va_list	ap;
-	
+
 	va_start(ap, str);
 	ret = 0;
 	while (*str)
