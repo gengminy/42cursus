@@ -46,14 +46,14 @@ void	send_message(char *pid_str, char *str)
 
 void	receive_ack(int signo)
 {
-	if (signo == SIGUSR1)
+	if (signo == SIGUSR2)
 		ft_putstr_fd("ACK Received!\n", 1);
 	exit(0);
 }
 
 int	main(int argc, char *argv[])
 {
-	signal(SIGUSR1, receive_ack);
+	signal(SIGUSR2, receive_ack);
 	if (argc != 3)
 	{
 		ft_putstr_fd("Usage : ", 1);

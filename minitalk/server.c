@@ -5,7 +5,7 @@
 void	send_ack(int pid)
 {
 	write(1, "\n", 1);
-	kill(pid, SIGUSR1);
+	kill(pid, SIGUSR2);
 }
 
 void	handler(int signo, siginfo_t *info, void *context)
