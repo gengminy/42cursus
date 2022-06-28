@@ -3,68 +3,72 @@
 # include <unistd.h>
 # include "./libft/libft.h"
 
-void	sendsig(int id, int num)
+void	send_signal(int pid, int bit)
 {
-	if (num)
-		kill(id, SIGUSR1);
+	if (bit)
+		kill(pid, SIGUSR1);
 	else
-		kill(id, SIGUSR2);
+		kill(pid, SIGUSR2);
 }
 
-void	sendbitnum(int id, int num)
+void	send_close(int pid)
 {
-	int	bit;
+	int	bitmask;
 
-	bit = 128;
-	while (bit)
+	bitmask = 1 << 7;
+	while (bitmask)
 	{
-		sendsig(id, bit & num);
-		bit = bit >> 1;
+		send_signal(pid, 0);
+		bitmask >>= 1;
 		usleep(100);
 	}
 }
 
-void	sigtest(char *pid, char *str)
+void	send_message(char *pid_str, char *str)
 {
-	int	bit;
-	int	id;
+	int	bitmask;
+	int	pid;
 
-	id = ft_atoi(pid);
+	pid = ft_atoi(pid_str);
 	while (str && ft_strlen(str))
 	{
-		bit = 128;
-		while (bit)
+		bitmask = 1 << 7;
+		while (bitmask)
 		{
-			sendsig(id, bit & *str);
-			bit = bit >> 1;
+			send_signal(pid, bitmask & *str);
+			bitmask = bitmask >> 1;
 			usleep(100);
 		}
 		str++;
 	}
-	sendbitnum(id, 255);
-	return ;
+	send_close(pid);
 }
 
-void	success_ack(int signo)
+void	receive_ack(int signo)
 {
 	if (signo == SIGUSR1)
-		write(1, "ACK SUCCESS!\n", 14);
+		ft_putstr_fd("ACK Received!\n", 1);
 	exit(0);
 }
 
 int	main(int argc, char *argv[])
 {
-	signal(SIGUSR1, success_ack);
+	signal(SIGUSR1, receive_ack);
 	if (argc != 3)
 	{
-		write(1, "Usage : ", 8);
+		ft_putstr_fd("Usage : ", 1);
 		write(1, argv[0], ft_strlen(argv[0]));
-		write(1, " PID MESSAGE\n", 13);
+		ft_putstr_fd(" PID MESSAGE\n", 1);
+		exit(0);
+	}
+	else if (ft_atoi(argv[1]) <= 100 || ft_atoi(argv[1]) > 99999)
+	{
+		ft_putstr_fd("PID must be in range (101 ~ 99999)\n", 1);
 		exit(0);
 	}
 	else
-		sigtest(argv[1], argv[2]);
+		send_message(argv[1], argv[2]);
 	sleep(1);
-	write(1, "over 1sec\n", 10);
+	ft_putstr_fd("Timeout over 1sec\n", 1);
 	return (0);
 }

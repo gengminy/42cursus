@@ -35,15 +35,13 @@ all : $(LIBFT_NAME) $(NAME)
 $(NAME) : $(NAME_CLIENT) $(NAME_SERVER)
 
 $(LIBFT_NAME):
-	make -C $(LIBFT_DIR)/
+	make -C $(LIBFT_DIR)
 
-$(NAME_SERVER): $(SRC_SERVER) $(LIBFT)
+$(NAME_SERVER): $(SRCS_SERVER) $(LIBFT)
 	$(CC) $(CFLAG) $^ -o $@
-	@printf "${FG_GREEN}Projcet make all succeeded!\n${\e[0m}"
 
-$(NAME_CLIENT): $(SRC_SERVER) $(LIBFT)
+$(NAME_CLIENT): $(SRCS_CLIENT) $(LIBFT)
 	$(CC) $(CFLAG) $^ -o $@
-	@printf "${FG_GREEN}Projcet make all succeeded!\n${\e[0m}"
 
 bonus:
 	make all

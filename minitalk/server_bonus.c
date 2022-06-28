@@ -1,54 +1,49 @@
 # include <signal.h>
-# include <stdlib.h>
 # include <unistd.h>
-# include "./libft/libft.h"
-void	endLine(int id)
+# include "../libft/libft.h"
+
+void	send_ack(int pid)
 {
 	write(1, "\n", 1);
-	kill(id, SIGUSR1);
+	kill(pid, SIGUSR1);
 }
 
 void	handler(int signo, siginfo_t *info, void *context)
 {
-	static int		num;
-	static int		ascii;
+	static int		ch;
+	static int		check_bit;
 
-	(void)info;
 	(void)context;
-	if (ascii < 8)
+	if (check_bit < 8)
 	{
-		num = num << 1;
+		ch <<= 1;
 		if (signo == SIGUSR1)
-			num = num | 1;
-		ascii++;
+			ch |= 1;
+		check_bit++;
 	}
-	if (ascii >= 8)
+	if (check_bit >= 8)
 	{
-		if (num != 255)
-			write(1, &num, 1);
+		if (ch != 0)
+			write(1, &ch, 1);
 		else
-			endLine(info->si_pid);
-		num = 0;
-		ascii = 0;
+			send_ack(info->si_pid);
+		ch = 0;
+		check_bit = 0;
 	}
-	return ;
 }
 
 int	main(void)
 {
-	struct sigaction	sigact;
+	struct sigaction	s_sigaction;
 	int					pid;
-	char				*pid_str;
 
 	pid = getpid();
-	pid_str = ft_itoa(pid);
-	sigact.sa_sigaction = handler;
-	sigact.sa_flags = SA_SIGINFO;
-	write(1, pid_str, ft_strlen(pid_str));
+	ft_putnbr_fd(pid, 1);
 	write(1, "\n", 1);
-	free(pid_str);
-	sigaction(SIGUSR1, &sigact, NULL);
-	sigaction(SIGUSR2, &sigact, NULL);
+	s_sigaction.sa_sigaction = handler;
+	s_sigaction.sa_flags = SA_SIGINFO;
+	sigaction(SIGUSR1, &s_sigaction, 0);
+	sigaction(SIGUSR2, &s_sigaction, 0);
 	while (1)
 		pause();
 	return (0);
